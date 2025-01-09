@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transaksi</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script>
+        function addMedicine() {
+            const medicineContainer = document.getElementById('medicineContainer');
+            const medicineDiv = document.createElement('div');
+            medicineDiv.className = 'mb-3 medicine-item';
+            medicineDiv.innerHTML = `
+                <label class="form-label">Medicine ID:</label>
+                <input type="number" class="form-control" name="medicine_id">
+                <label class="form-label">Jumlah Obat:</label>
+                <input type="number" class="form-control" name="medicine_quantity" min="1">
+                <button type="button" class="btn btn-danger btn-sm mt-2" onclick="removeMedicine(this)">Hapus</button>
+            `;
+            medicineContainer.appendChild(medicineDiv);
+        }
+
+        function removeMedicine(button) {
+            const medicineDiv = button.parentElement;
+            medicineDiv.remove();
+        }
+
+        async function fetchPatientAndDoctor() {
+            const medicalRecordId = document.getElementById('medical_record_id').value;
+            if (medicalRecordId) {
+                const response = await fetch(`/api/medical_record/${medicalRecordId}`);
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.patient) {
+                        document.getElementById('patient_name').value = data.patient.name;
+                        document.getElementById('patient_address').value = data.patient.address;
+                        document.getElementById('patient_phone').value = data.patient.phone;
+
+                        const birthDate = new Date(data.patient.birth_date);
+                        const day = String(birthDate.getDate()).padStart(2, '0');
+                        const month = String(birthDate.getMonth() + 1).padStart(2, '0');
+                        const year = birthDate.getFullYear();
+                        document.getElementById('patient_dob').value = `${year}-${month}-${day}`;
+                        document.getElementById('patient_gender').value = data.patient.gender === 'Male' ? 'male' : 'female';
+                    }
+                    if (data.doctor) {
+                        document.getElementById('doctor_name').value = data.doctor.name;
+                        document.getElementById('doctor_phone').value = data.doctor.phone;
+                        document.getElementById('doctor_specialization').value = data.doctor.specialty;
+                    }
+                } else {
+                    alert('Medical Record tidak ditemukan!');
+                }
+            }
+        }
+
+        function validateMedicalRecord() {
+            const medicalRecordId = document.getElementById('medical_record_id').value;
+            if (medicalRecordId) {
+                fetchPatientAndDoctor();
+            } else {
+                alert('Silakan masukkan Medical Record ID!');
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Transaksi</h1>
+        
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="alert alert-info">
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST" class="mb-4">
+            <div class="mb-3">
+                <label for="transaction_date" class="form-label">Tanggal Transaksi:</label>
+                <input type="date" class="form-control" id="transaction_date" name="transaction_date" required>
+            </div>
+            <div class="mb-3">
+                <label for="amount" class="form-label">Jumlah:</label>
+                <input type="text" class="form-control" id="amount" name="amount" required placeholder="Masukkan jumlah dalam format rupiah">
+            </div>
+            <div class="mb-3">
+                <label for="payment_method" class="form-label">Metode Pembayaran:</label>
+                <input type="text" class="form-control" id="payment_method" name="payment_method" required>
+            </div>
+            <div class="mb-3">
+                <label for="status" class="form-label">Status:</label>
+                <input type="text" class="form-control" id="status" name="status" required>
+            </div>
+            <div class="mb-3">
+                <label for="medical_record_id" class="form-label">Medical Record ID:</label>
+                <input type="number" class="form-control" id="medical_record_id" name="medical_record_id" required onblur="validateMedicalRecord()">
+                <button type="button" class="btn btn-primary mt-2" onclick="validateMedicalRecord()">Validasi</button>
+            </div>
+
+            <div class="mb-3">
+                <label for="patient_name" class="form-label">Nama Pas ien:</label>
+                <input type="text" class="form-control" id="patient_name" name="patient_name" required readonly>
+            </div>
+            <div class="mb-3">
+                <label for="patient_address" class="form-label">Alamat Pasien:</label>
+                <input type="text" class="form-control" id="patient_address" name="patient_address" required readonly>
+            </div>
+            <div class="mb-3">
+                <label for="patient_phone" class="form-label">Nomor Telepon Pasien:</label>
+                <input type="tel" class="form-control" id="patient_phone" name="patient_phone" required readonly>
+            </div>
+            <div class="mb-3">
+                <label for="patient_dob" class="form-label">Tanggal Lahir Pasien:</label>
+                <input type="date" class="form-control" id="patient_dob" name="patient_dob" readonly>
+            </div>
+            <div class="mb-3">
+                <label for="patient_gender" class="form-label">Jenis Kelamin Pasien:</label>
+                <select class="form-control" id="patient_gender" name="patient_gender" disabled>
+                    <option value="male">Laki-laki</option>
+                    <option value="female">Perempuan</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="doctor_name" class="form-label">Nama Dokter:</label>
+                <input type="text" class="form-control" id="doctor_name" name="doctor_name" required readonly>
+            </div>
+            <div class="mb-3">
+                <label for="doctor_phone" class="form-label">Nomor Telepon Dokter:</label>
+                <input type="tel" class="form-control" id="doctor_phone" name="doctor_phone" required readonly>
+            </div>
+            <div class="mb-3">
+                <label for="doctor_specialization" class="form-label">Spesialisasi Dokter:</label>
+                <input type="text" class="form-control" id="doctor_specialization" name="doctor_specialization" readonly>
+            </div>
+
+            <div id="medicineContainer">
+                <h5>Obat yang Dibeli (Opsional)</h5>
+                <div class="mb-3 medicine-item">
+                    <label class="form-label">Medicine ID:</label>
+                    <input type="number" class="form-control" name="medicine_id">
+                    <label class="form-label">Jumlah Obat:</label>
+                    <input type="number" class="form-control" name="medicine_quantity" min="1">
+                    <button type="button" class="btn btn-danger btn-sm mt-2" onclick="removeMedicine(this)">Hapus</button>
+                </div>
+            </div>
+            <button type="button" class="btn btn-secondary mb-3" onclick="addMedicine()">Tambah Obat</button>
+            <button type="submit" class="btn btn-primary">Tambah Transaksi</button>
+        </form>
+
+        <h2>Semua Transaksi</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Tanggal Transaksi</th>
+                    <th>Jumlah</th>
+                    <th>Metode Pembayaran</th>
+                    <th>Status</th>
+                    <th>Patient ID</th>
+                    <th>Medical Record ID</th>
+                    <th>Obat yang Dibeli</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for transaction, formatted_amount in transactions %}
+                <tr>
+                    <td>{{ transaction.transaction_date }}</td>
+                    <td>{{ formatted_amount }}</td>
+                    <td>{{ transaction.payment_method }}</td>
+                    <td>{{ transaction.status }}</td>
+                    <td>{{ transaction.patient_id }}</td>
+                    <td>{{ transaction.medical_record_id }}</td>
+                    <td>
+                        {% for medicine in transaction.medicines %}
+                            <div>{{ medicine.id }} ({{ medicine.quantity }})</div>
+                        {% endfor %}
+                    </td>
+                    <td>
+                        <a href="{{ url_for('print_receipt_pdf', transaction_id=transaction.id) }}" class="btn btn-info btn-sm">Print Receipt</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="text-center mt-4">
+            <a href="{{ url_for('index') }}" class="btn btn-secondary">Kembali ke Beranda</a>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

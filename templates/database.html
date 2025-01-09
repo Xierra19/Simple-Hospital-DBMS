@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Database View</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container-fluid mt-5">
+        <h1 class="text-center mb-4">Database View</h1>
+
+        <!-- Pasien -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h3>Pasien</h3>
+            </div>
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nama</th>
+                            <th>Jenis Kelamin</th>
+                            <th>Tanggal Lahir</th>
+                            <th>Alamat</th>
+                            <th>Telepon</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for patient in patients %}
+                        <tr>
+                            <td>{{ patient.id }}</td>
+                            <td>{{ patient.name }}</td>
+                            <td>{{ patient.gender }}</td>
+                            <td>{{ patient.birth_date }}</td>
+                            <td>{{ patient.address }}</td>
+                            <td>{{ patient.phone }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Dokter -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h3>Dokter</h3>
+            </div>
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nama</th>
+                            <th>Jenis Kelamin</th>
+                            <th>Telepon</th>
+                            <th>Spesialisasi</th>
+                            <th>Alamat</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for doctor in doctors %}
+                        <tr>
+                            <td>{{ doctor.id }}</td>
+                            <td>{{ doctor.name }}</td>
+                            <td>{{ doctor.gender }}</td>
+                            <td>{{ doctor.phone }}</td>
+                            <td>{{ doctor.specialty }}</td>
+                            <td>{{ doctor.address }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Kamar -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h3>Kamar</h3>
+            </div>
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nomor Kamar</th>
+                            <th>Tipe Kamar</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for room in rooms %}
+                        <tr>
+                            <td>{{ room.id }}</td>
+                            <td>{{ room.room_number }}</td>
+                            <td>{{ room.room_type }}</td>
+                            <td>{{ room.status }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Obat -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h3>Obat</h3>
+            </div>
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nama</th>
+                            <th>Dosis</th>
+                            <th>Tanggal Kedaluwarsa</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for medicine in medicines %}
+                        <tr>
+                            <td>{{ medicine.id }}</td>
+                            <td>{{ medicine.name }}</td>
+                            <td>{{ medicine.dosage }}</td>
+                            <td>{{ medicine.expiration_date }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Transaksi -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h3>Transaksi</h3>
+            </div>
+            <div class="card-body <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Tanggal Transaksi</th>
+                            <th>Jumlah</th>
+                            <th>Metode Pembayaran</th>
+                            <th>Status</th>
+                            <th>ID Pasien</th>
+                            <th>ID Rekam Medis</th>
+                            <th>ID Obat</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for transaction in transactions %}
+                        <tr>
+                            <td>{{ transaction.id }}</td>
+                            <td>{{ transaction.transaction_date }}</td>
+                            <td>{{ transaction.amount }}</td>
+                            <td>{{ transaction.payment_method }}</td>
+                            <td>{{ transaction.status }}</td>
+                            <td>{{ transaction.patient_id }}</td>
+                            <td>{{ transaction.medical_record_id }}</td>
+                            <td>{{ transaction.medicine_id }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Rekam Medis -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h3>Rekam Medis</h3>
+            </div>
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>ID Pasien</th>
+                            <th>ID Dokter</th>
+                            <th>Penyakit</th>
+                            <th>Jenis Layanan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for record in medical_records %}
+                        <tr>
+                            <td>{{ record.id }}</td>
+                            <td>{{ record.patient_id }}</td>
+                            <td>{{ record.doctor_id }}</td>
+                            <td>{{ record.disease }}</td>
+                            <td>{{ record.service_type }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="{{ url_for('index') }}" class="btn btn-primary">Kembali ke Beranda</a>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

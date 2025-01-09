@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplikasi RS</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            background-color: #f0f4f8; /* Warna latar belakang yang lebih lembut */
+        }
+        .header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+        .card {
+            transition: transform 0.2s; /* Efek transisi saat hover */
+        }
+        .card:hover {
+            transform: scale(1.05); /* Membesarkan kartu saat hover */
+        }
+        .btn {
+            width: 100%; /* Memastikan tombol mengisi lebar kolom */
+        }
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Selamat datang di Aplikasi RS</h1>
+        <p>Silakan pilih menu berikut untuk mengelola data:</p>
+    </div>
+
+    <div class="container mt-4">
+        <div class="row text-center">
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <i class="fas fa-user-injured fa-3x mb-3"></i>
+                        <h5 class="card-title">Pasien</h5>
+                        <a href="/patients" class="btn btn-primary">Kelola Pasien</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <i class="fas fa-user-md fa-3x mb-3"></i>
+                        <h5 class="card-title">Dokter</h5>
+                        <a href="/doctors" class="btn btn-success">Kelola Dokter</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <i class="fas fa-procedures fa-3x mb-3"></i>
+                        <h5 class="card-title">Kamar</h5>
+                        <a href="/rooms" class="btn btn-info">Kelola Kamar</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <i class="fas fa-pills fa-3x mb-3"></i>
+                        <h5 class="card-title">Obat</h5>
+                        <a href="/medicines" class="btn btn-warning">Kelola Obat</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <i class="fas fa-file-invoice-dollar fa-3x mb-3"></i>
+                        <h5 class="card-title">Transaksi</h5>
+                        <a href="/transactions" class="btn btn-danger">Kelola Transaksi</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <i class="fas fa-notes-medical fa-3x mb-3"></i>
+                        <h5 class="card-title">Rekam Medis</h5>
+                        <a href="/medical_records" class="btn btn-secondary">Kelola Rekam Medis</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <i class="fas fa-user-sh ield fa-3x mb-3"></i>
+                        <h5 class="card-title">Add Admin</h5>
+                        <a href="/add_user" class="btn btn-secondary">Tambah Admin</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <i class="fas fa-database fa-3x mb-3"></i>
+                        <h5 class="card-title">Lihat Database</h5>
+                        <a href="/database" class="btn btn-dark">Akses Database</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <a href="/logout" class="btn btn-outline-danger">Logout</a>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+</body>
+</html>

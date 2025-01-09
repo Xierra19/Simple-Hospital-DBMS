@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dokter</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Tambah Dokter</h1>
+        
+        <!-- Menampilkan Pesan Flash -->
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="alert alert-info">
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <!-- Form Tambah Dokter -->
+        <form method="POST" class="mb-4">
+            <div class="mb-3">
+                <label for="name" class="form-label">Nama:</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+            </div>
+            <div class="mb-3">
+                <label for="gender" class="form-label">Jenis Kelamin:</label>
+                <select class="form-select" id="gender" name="gender" required>
+                    <option value="Male">Laki-laki</option>
+                    <option value="Female">Perempuan</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="phone" class="form-label">Telepon:</label>
+                <input type="tel" class="form-control" id="phone" name="phone" required>
+            </div>
+            <div class="mb-3">
+                <label for="specialty" class="form-label">Spesialisasi:</label>
+                <input type="text" class="form-control" id="specialty" name="specialty" required>
+            </div>
+            <div class="mb-3">
+                <label for="address" class="form-label">Alamat:</label>
+                <input type="text" class="form-control" id="address" name="address" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Tambah Dokter</button>
+        </form>
+
+        <!-- Daftar Dokter -->
+        <h2>Semua Dokter</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nama</th>
+                    <th>Jenis Kelamin</th>
+                    <th>Telepon</th>
+                    <th>Spesialisasi</th>
+                    <th>Alamat</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for doctor in doctors %}
+                <tr>
+                    <td>{{ doctor.id }}</td>
+                    <td>{{ doctor.name }}</td>
+                    <td>{{ doctor.gender }}</td>
+                    <td>{{ doctor.phone }}</td>
+                    <td>{{ doctor.specialty }}</td>
+                    <td>{{ doctor.address }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="text-center mt-4">
+            <a href="{{ url_for('index') }}" class="btn btn-secondary">Kembali ke Beranda</a>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
